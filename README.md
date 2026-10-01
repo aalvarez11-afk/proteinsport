@@ -19,8 +19,8 @@ carpeta de la demo, fuera de este repo) desde la tienda Shopify real de la marca
 proteinsportcali.com. Trae una **selección de demo de 28 productos** (la lista `DEMO` del generador) con **precios, sabores y fotos reales**;
 las fotos se cargan directo del CDN de Shopify.
 
-- El stock no es real: Shopify solo dice si una variante está disponible, así que va 10 si lo está
-  y 0 si no. El agente de WhatsApp confirma la disponibilidad con un asesor.
+- El stock es inventado para la demo (Shopify no lo publica), el mismo que tiene MergeOn: el agente
+  de WhatsApp vende directo con él. Los sabores en 0 no aparecen para elegir.
 - Quedaron fuera a propósito los pro-hormonales y anabólicos.
 
 Para refrescarlo: volver a bajar `shopify-productos.json`, correr el generador, commit y push.

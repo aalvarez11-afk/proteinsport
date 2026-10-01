@@ -1,5 +1,5 @@
 {
- "_comentario": "Catálogo DEMO de Protein Sport Cali, generado con mergeon/generar-catalogo.js desde su tienda Shopify (proteinsportcali.com). Solo la selección DEMO del generador (28 de sus 178 productos). Precios, fotos y sabores son los reales de su tienda; el stock no (10 = disponible en su web, 0 = agotado). Fuera a propósito los pro-hormonales y anabólicos. En el inventario, talla = presentación y color = sabor.",
+ "_comentario": "Catálogo DEMO de Protein Sport Cali, generado con mergeon/generar-catalogo.js desde su tienda Shopify (proteinsportcali.com). Solo la selección DEMO del generador (28 de sus 178 productos). Precios, fotos y sabores son los reales de su tienda; el stock es INVENTADO para la demo (el mismo que tiene MergeOn #317). Fuera a propósito los pro-hormonales y anabólicos. En el inventario, talla = presentación y color = sabor.",
  "_sincronizado": "2026-10-01",
  "productos": [
   {
@@ -400,133 +400,133 @@
    "referencia": "COM-001",
    "talla": "Combo",
    "color": "Vainilla",
-   "stock": "10"
+   "stock": "4"
   },
   {
    "referencia": "COM-001",
    "talla": "Combo",
    "color": "Fresa",
-   "stock": "10"
+   "stock": "5"
   },
   {
    "referencia": "COM-002",
    "talla": "Combo",
    "color": "",
-   "stock": "10"
+   "stock": "19"
   },
   {
    "referencia": "COM-003",
    "talla": "Combo",
    "color": "",
-   "stock": "10"
+   "stock": "12"
   },
   {
    "referencia": "COM-006",
    "talla": "Combo",
    "color": "",
-   "stock": "10"
+   "stock": "13"
   },
   {
    "referencia": "COM-007",
    "talla": "Combo",
    "color": "Vainilla",
-   "stock": "10"
+   "stock": "6"
   },
   {
    "referencia": "COM-007",
    "talla": "Combo",
    "color": "Fresa",
-   "stock": "10"
+   "stock": "7"
   },
   {
    "referencia": "COM-007",
    "talla": "Combo",
    "color": "Chocolate",
-   "stock": "10"
+   "stock": "8"
   },
   {
    "referencia": "SNA-001",
    "talla": "Caja x12",
    "color": "Vainilla",
-   "stock": "10"
+   "stock": "17"
   },
   {
    "referencia": "SNA-001",
    "talla": "Caja x12",
    "color": "Chocolate",
-   "stock": "10"
+   "stock": "18"
   },
   {
    "referencia": "SNA-001",
    "talla": "Caja x12",
    "color": "Fresa",
-   "stock": "10"
+   "stock": "19"
   },
   {
    "referencia": "GAN-010",
    "talla": "4 Lbs",
    "color": "Vainilla",
-   "stock": "10"
+   "stock": "23"
   },
   {
    "referencia": "GAN-018",
    "talla": "6 Lbs",
    "color": "Vainilla",
-   "stock": "10"
+   "stock": "11"
   },
   {
    "referencia": "GAN-018",
    "talla": "6 Lbs",
    "color": "Chocolate",
-   "stock": "10"
+   "stock": "0"
   },
   {
    "referencia": "GAN-025",
    "talla": "5 Lbs",
    "color": "Vainilla",
-   "stock": "10"
+   "stock": "13"
   },
   {
    "referencia": "PRO-001",
    "talla": "2 Lbs",
    "color": "Vainilla",
-   "stock": "10"
+   "stock": "20"
   },
   {
    "referencia": "PRO-001",
    "talla": "2 Lbs",
    "color": "Chocolate",
-   "stock": "10"
+   "stock": "21"
   },
   {
    "referencia": "PRO-001",
    "talla": "2 Lbs",
    "color": "Natural",
-   "stock": "10"
+   "stock": "22"
   },
   {
    "referencia": "PRO-002",
    "talla": "2 Lbs",
    "color": "Vainilla Ice Cream",
-   "stock": "10"
+   "stock": "13"
   },
   {
    "referencia": "PRO-002",
    "talla": "2 Lbs",
    "color": "Extreme Milk Chocolate",
-   "stock": "10"
+   "stock": "14"
   },
   {
    "referencia": "PRO-002",
    "talla": "2 Lbs",
    "color": "Cookies and Cream",
-   "stock": "10"
+   "stock": "0"
   },
   {
    "referencia": "PRO-002",
    "talla": "2 Lbs",
    "color": "Double Rich Chocolate",
-   "stock": "10"
+   "stock": "16"
   },
   {
    "referencia": "PRO-002",
@@ -538,49 +538,49 @@
    "referencia": "PRO-003",
    "talla": "2 Lbs",
    "color": "Vainilla",
-   "stock": "10"
+   "stock": "6"
   },
   {
    "referencia": "PRO-003",
    "talla": "2 Lbs",
    "color": "Pay de Limón",
-   "stock": "10"
+   "stock": "7"
   },
   {
    "referencia": "PRO-003",
    "talla": "2 Lbs",
    "color": "Chocolate Avellana",
-   "stock": "10"
+   "stock": "8"
   },
   {
    "referencia": "PRO-004",
    "talla": "2 Lbs",
    "color": "Vainilla",
-   "stock": "10"
+   "stock": "21"
   },
   {
    "referencia": "PRO-004",
    "talla": "2 Lbs",
    "color": "Chocolate",
-   "stock": "10"
+   "stock": "22"
   },
   {
    "referencia": "PRO-004",
    "talla": "2 Lbs",
    "color": "Fresa",
-   "stock": "10"
+   "stock": "23"
   },
   {
    "referencia": "PRO-019",
    "talla": "1.3 Lbs",
    "color": "Gourmet Vainilla",
-   "stock": "10"
+   "stock": "11"
   },
   {
    "referencia": "PRO-019",
    "talla": "1.3 Lbs",
    "color": "Gourmet Chocolate",
-   "stock": "10"
+   "stock": "12"
   },
   {
    "referencia": "PRO-019",
@@ -592,7 +592,7 @@
    "referencia": "PRO-019",
    "talla": "1.3 Lbs",
    "color": "Cookies and Cream",
-   "stock": "10"
+   "stock": "13"
   },
   {
    "referencia": "PRO-019",
@@ -610,49 +610,49 @@
    "referencia": "CRE-001",
    "talla": "60 Serv",
    "color": "Pink Lemonade",
-   "stock": "10"
+   "stock": "19"
   },
   {
    "referencia": "CRE-001",
    "talla": "60 Serv",
    "color": "Red Berrys",
-   "stock": "10"
+   "stock": "20"
   },
   {
    "referencia": "CRE-003",
    "talla": "500g - 147 Serv",
    "color": "",
-   "stock": "10"
+   "stock": "5"
   },
   {
    "referencia": "CRE-004",
    "talla": "100 Serv",
    "color": "",
-   "stock": "10"
+   "stock": "20"
   },
   {
    "referencia": "CRE-005",
    "talla": "90 Servicios",
    "color": "",
-   "stock": "10"
+   "stock": "13"
   },
   {
    "referencia": "PRE-001",
    "talla": "30 Serv",
    "color": "Fruit Punch",
-   "stock": "10"
+   "stock": "4"
   },
   {
    "referencia": "PRE-001",
    "talla": "30 Serv",
    "color": "Citrus Punch",
-   "stock": "10"
+   "stock": "5"
   },
   {
    "referencia": "PRE-001",
    "talla": "30 Serv",
    "color": "Sandia",
-   "stock": "10"
+   "stock": "6"
   },
   {
    "referencia": "PRE-002",
@@ -664,79 +664,79 @@
    "referencia": "PRE-002",
    "talla": "30 Servs",
    "color": "Blue Raz",
-   "stock": "10"
+   "stock": "19"
   },
   {
    "referencia": "PRE-002",
    "talla": "30 Servs",
    "color": "Watermelon",
-   "stock": "10"
+   "stock": "20"
   },
   {
    "referencia": "PRE-019",
    "talla": "35 Serv",
    "color": "Fruit Punch",
-   "stock": "10"
+   "stock": "17"
   },
   {
    "referencia": "PRE-019",
    "talla": "35 Serv",
    "color": "Uva",
-   "stock": "10"
+   "stock": "18"
   },
   {
    "referencia": "QUE-001",
    "talla": "Cápsulas + Drenador",
    "color": "",
-   "stock": "10"
+   "stock": "20"
   },
   {
    "referencia": "QUE-003",
    "talla": "60 Servs",
    "color": "Uva",
-   "stock": "10"
+   "stock": "6"
   },
   {
    "referencia": "AMI-001",
    "talla": "30 Serv",
    "color": "Fruit Fusion",
-   "stock": "10"
+   "stock": "14"
   },
   {
    "referencia": "AMI-001",
    "talla": "30 Serv",
    "color": "Blue Raspberry",
-   "stock": "10"
+   "stock": "15"
   },
   {
    "referencia": "AMI-007",
    "talla": "30 Serv",
    "color": "Lima Limón",
-   "stock": "10"
+   "stock": "16"
   },
   {
    "referencia": "AMI-007",
    "talla": "30 Serv",
    "color": "Fruit Punch",
-   "stock": "10"
+   "stock": "17"
   },
   {
    "referencia": "COL-004",
    "talla": "585 Gramos",
    "color": "Vainilla",
-   "stock": "10"
+   "stock": "22"
   },
   {
    "referencia": "BIE-001",
    "talla": "44 Packs",
    "color": "",
-   "stock": "10"
+   "stock": "3"
   },
   {
    "referencia": "BIE-008",
    "talla": "1200mg - 60 Perlas",
    "color": "",
-   "stock": "10"
+   "stock": "20"
   }
  ]
 }
