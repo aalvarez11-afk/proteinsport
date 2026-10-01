@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Emblema de Protein Sport Cali: círculo blanco con aro rojo y PSC, como el de su tienda -->
+  <circle cx="32" cy="32" r="30" fill="#ffffff" stroke="#e11d1d" stroke-width="3.5"/>
+  <text x="32" y="37" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-style="italic" font-size="19" fill="#0b0b0c">PSC</text>
+  <rect x="14" y="40.5" width="36" height="1.6" fill="#e11d1d"/>
+  <text x="32" y="48.5" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="5.6" letter-spacing=".3" fill="#e11d1d">PROTEIN SPORT</text>
+</svg>

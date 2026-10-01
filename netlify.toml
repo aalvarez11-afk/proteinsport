@@ -1,0 +1,27 @@
+# Configuración de despliegue de Protein Sport Cali en Netlify
+# Sitio estático: no hay que compilar nada.
+
+[build]
+  publish = "."
+  command = ""
+
+# El HTML no se cachea, para que un cambio en el sitio se vea enseguida.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# El respaldo tampoco: es la red de seguridad cuando la hoja falla.
+[[headers]]
+  for = "/datos/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# CSS, JS e imágenes sí se cachean: cambian poco y así el sitio carga rápido.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

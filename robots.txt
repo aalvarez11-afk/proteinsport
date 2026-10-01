@@ -1,0 +1,5 @@
+# Demo para presentar a Protein Sport Cali: fuera de los buscadores
+# hasta que la tienda sea cliente. Para abrirlo: cambiar a "Allow: /"
+# y quitar el meta robots noindex de index.html y legal/.
+User-agent: *
+Disallow: /
