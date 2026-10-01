@@ -16,7 +16,7 @@ cambiarlo también en `index.html`, `assets/js/config.js` y en los prompts de Me
 
 `datos/productos.json` **no se edita a mano**: lo genera `mergeon/generar-catalogo.js` (en la
 carpeta de la demo, fuera de este repo) desde la tienda Shopify real de la marca,
-proteinsportcali.com. Trae una **selección de demo de 28 productos** (la lista `DEMO` del generador) con **precios, sabores y fotos reales**;
+proteinsportcali.com. Trae **sus 178 productos** con **precios, sabores y fotos reales**;
 las fotos se cargan directo del CDN de Shopify.
 
 - El stock es inventado para la demo (Shopify no lo publica), el mismo que tiene MergeOn: el agente
