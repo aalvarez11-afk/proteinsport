@@ -63,7 +63,19 @@ async function diagnosticarKey({ url, key, ecommerceId }, status) {
       headers: { Authorization: `Bearer ${key}` },
       signal: AbortSignal.timeout(5000),
     });
-    if (!res.ok) return `MergeOn respondió HTTP ${status}: la key no es válida (HTTP ${res.status} al validarla)`;
+    if (!res.ok) {
+      // ¿Respondió la API de MergeOn o un firewall delante de ella? Un firewall
+      // devuelve HTML; la API, JSON con "detail". Del detalle se tachan las keys.
+      const tipo = res.headers.get('content-type') || '';
+      const cuerpo = (await res.text()).slice(0, 400);
+      if (!tipo.includes('json')) {
+        return `MergeOn respondió HTTP ${status}: bloqueado antes de llegar a la API (respuesta ${tipo.split(';')[0] || 'sin tipo'}, server ${res.headers.get('server') || '?'})`;
+      }
+      let detalle = '';
+      try { const d = JSON.parse(cuerpo).detail; detalle = typeof d === 'string' ? d : JSON.stringify(d); } catch { /* sin detalle */ }
+      detalle = detalle.replace(/mk_[A-Za-z0-9]+/g, 'mk_***').slice(0, 120);
+      return `MergeOn respondió HTTP ${status}: rechazó la key (HTTP ${res.status} al validarla${detalle ? `: ${detalle}` : ''})`;
+    }
     const yo = await res.json();
     const suyo = String(yo?.ecommerce_id ?? '?');
     return suyo === String(ecommerceId)
