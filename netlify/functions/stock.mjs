@@ -55,6 +55,25 @@ export function resumir(lista) {
   return productos;
 }
 
+// Cuando MergeOn rechaza la key, pregunta de qué negocio es: el error más
+// probable es haber pegado la key de otro negocio. Solo se devuelve el número.
+async function diagnosticarKey({ url, key, ecommerceId }, status) {
+  try {
+    const res = await fetch(`${url}/api-keys/me`, {
+      headers: { Authorization: `Bearer ${key}` },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!res.ok) return `MergeOn respondió HTTP ${status}: la key no es válida (HTTP ${res.status} al validarla)`;
+    const yo = await res.json();
+    const suyo = String(yo?.ecommerce_id ?? '?');
+    return suyo === String(ecommerceId)
+      ? `MergeOn respondió HTTP ${status}: la key es del negocio ${suyo} pero no tiene permiso para leer productos`
+      : `MergeOn respondió HTTP ${status}: la key es del negocio ${suyo}, no del ${ecommerceId}`;
+  } catch {
+    return `MergeOn respondió HTTP ${status}`;
+  }
+}
+
 async function traerProductos({ url, key, ecommerceId }) {
   const todos = [];
   for (let pagina = 0; pagina < MAX_PAGINAS; pagina++) {
@@ -62,6 +81,7 @@ async function traerProductos({ url, key, ecommerceId }) {
       headers: { Authorization: `Bearer ${key}`, ecommerce_id: ecommerceId },
       signal: AbortSignal.timeout(8000),
     });
+    if (res.status === 401 || res.status === 403) throw new Error(await diagnosticarKey({ url, key, ecommerceId }, res.status));
     if (!res.ok) throw new Error(`MergeOn respondió HTTP ${res.status}`);
     const lote = await res.json();
     if (!Array.isArray(lote)) {
