@@ -18,6 +18,8 @@
  */
 
 const POR_PAGINA = 200;
+// Se identifica tal cual es: un servidor de la web de Protein Sport.
+const IDENTIDAD = { 'User-Agent': 'ProteinSportWeb/1.0 (+https://proteinsport.netlify.app; stock MergeOn)', Accept: 'application/json' };
 const MAX_PAGINAS = 10;
 
 // "PRO-001-3" -> "PRO-001"; si no hay variantes, la descripción trae "Ref. PRO-001."
@@ -60,7 +62,7 @@ export function resumir(lista) {
 async function diagnosticarKey({ url, key, ecommerceId }, status) {
   try {
     const res = await fetch(`${url}/api-keys/me`, {
-      headers: { Authorization: `Bearer ${key}` },
+      headers: { ...IDENTIDAD, Authorization: `Bearer ${key}` },
       signal: AbortSignal.timeout(5000),
     });
     if (!res.ok) {
@@ -90,7 +92,7 @@ async function traerProductos({ url, key, ecommerceId }) {
   const todos = [];
   for (let pagina = 0; pagina < MAX_PAGINAS; pagina++) {
     const res = await fetch(`${url}/products/?limit=${POR_PAGINA}&offset=${pagina * POR_PAGINA}`, {
-      headers: { Authorization: `Bearer ${key}`, ecommerce_id: ecommerceId },
+      headers: { ...IDENTIDAD, Authorization: `Bearer ${key}`, ecommerce_id: ecommerceId },
       signal: AbortSignal.timeout(8000),
     });
     if (res.status === 401 || res.status === 403) throw new Error(await diagnosticarKey({ url, key, ecommerceId }, res.status));
