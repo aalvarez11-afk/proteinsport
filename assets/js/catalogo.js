@@ -503,7 +503,7 @@
         <h2>¡Tu pedido está listo!</h2>
         <p>Se abrió WhatsApp con tu pedido <strong>${esc(pedido)}</strong> ya escrito.</p>
         <p class="confirmacion-nota">Recuerda <strong>pulsar enviar</strong> en WhatsApp para que nos llegue.
-        Te confirmamos disponibilidad y costo de envío por ahí mismo.</p>
+        Por ahí mismo te mandamos el resumen para que lo confirmes y te indicamos cómo pagar.</p>
         <button class="btn btn-primario btn-ancho" id="btn-seguir">Seguir viendo el catálogo</button>
         <button class="btn btn-texto" id="btn-vaciar">Vaciar el carrito</button>
       </div>`;
