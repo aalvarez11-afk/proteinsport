@@ -88,6 +88,10 @@ const CONFIG = {
   avanzado: {
     respaldo: 'datos/productos.json',
     productosPorPagina: 12,
+    // MergeOn es la única fuente de stock, precio y disponibilidad: la web
+    // los lee de aquí (netlify/functions/stock.mjs). Si no responde, se
+    // queda con lo que trae el respaldo. Vacío = no consultar MergeOn.
+    stockEnVivo: '/api/stock',
   },
 };
 

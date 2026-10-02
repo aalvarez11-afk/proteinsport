@@ -19,8 +19,15 @@ carpeta de la demo, fuera de este repo) desde la tienda Shopify real de la marca
 proteinsportcali.com. Trae **sus 178 productos** con **precios, sabores y fotos reales**;
 las fotos se cargan directo del CDN de Shopify.
 
-- El stock es inventado para la demo (Shopify no lo publica), el mismo que tiene MergeOn: el agente
-  de WhatsApp vende directo con él. Los sabores en 0 no aparecen para elegir.
+- **MergeOn #317 es la única fuente de stock, precio y disponibilidad.** La web los lee en vivo de
+  `/api/stock` (`netlify/functions/stock.mjs`, cacheado 60 s en la CDN), así que muestra lo mismo que
+  el agente puede vender: el inventario se edita solo en el panel de MergeOn. Un producto oculto en
+  MergeOn desaparece de la web; una variante en 0 sale agotada.
+- La función necesita la variable de entorno **`MERGEON_API_KEY`** en Netlify (key del negocio #317,
+  nunca en este repo). Opcionales: `MERGEON_ECOMMERCE_ID` (por defecto 317) y `MERGEON_API_URL`.
+  Sin ella, o si MergeOn no responde, la web usa el stock de `datos/productos.json` como respaldo.
+- `datos/productos.json` queda como ficha (nombre, fotos, descripción) y respaldo. El stock que trae es
+  el inventado de la demo (Shopify no publica el real).
 - Quedaron fuera a propósito los pro-hormonales y anabólicos.
 
 Para refrescarlo: volver a bajar `shopify-productos.json`, correr el generador, commit y push.

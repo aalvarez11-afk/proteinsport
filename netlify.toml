@@ -5,6 +5,12 @@
   publish = "."
   command = ""
 
+# /api/stock: stock, precio y disponibilidad en vivo desde MergeOn. Necesita
+# la variable de entorno MERGEON_API_KEY (key del negocio #317), que se pone
+# en Netlify y nunca en este repo.
+[functions]
+  directory = "netlify/functions"
+
 # El HTML no se cachea, para que un cambio en el sitio se vea enseguida.
 [[headers]]
   for = "/*.html"

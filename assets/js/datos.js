@@ -235,6 +235,55 @@ const Datos = (() => {
     return /^[a-zA-Z0-9-_]{20,}$/.test(v) ? v : '';
   }
 
+  // ── Stock en vivo desde MergeOn ────────────────────────────
+  // MergeOn manda en stock, precio y si el producto se ve: la ficha (nombre,
+  // fotos, descripción) sale del respaldo, pero lo que el cliente puede
+  // comprar es lo mismo que el agente puede vender.
+
+  async function traerEnVivo() {
+    const url = CONFIG.avanzado.stockEnVivo;
+    if (!url) return null;
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const datos = await res.json();
+      return datos && datos.productos ? datos : null;
+    } catch (err) {
+      console.warn('[ProteinSport] Sin stock en vivo de MergeOn (', err.message, ') — uso el del respaldo.');
+      return null;
+    }
+  }
+
+  const claveVariante = (talla, color) => `${talla}|${color || ''}`.trim().toLowerCase();
+
+  function aplicarEnVivo(productos, enVivo) {
+    const resultado = [];
+    for (const p of productos) {
+      const vivo = enVivo.productos[p.referencia];
+      // Si MergeOn no lo tiene o lo ocultó, el agente no lo puede vender:
+      // se esconde. Solo con la lista completa, para no ocultar por un corte.
+      if (!vivo) { if (!enVivo.completo) resultado.push(p); continue; }
+      if (!vivo.disponible) continue;
+
+      if (vivo.precio > 0) {
+        p.precio = vivo.precio;
+        p.precioAntes = vivo.precioAntes > vivo.precio ? vivo.precioAntes : 0;
+      }
+      // Variante que MergeOn no tiene = no se vende. null = MergeOn no
+      // controla su stock: se deja comprar con el tope por defecto del carrito.
+      const sinControl = [];
+      p.variantes = p.variantes.map(v => {
+        const s = vivo.variantes[claveVariante(v.talla, v.color)];
+        if (s === null) sinControl.push(v);
+        return { ...v, stock: s === undefined ? 0 : (s ?? 10) };
+      });
+      p.stockDesconocido = p.variantes.length > 0 && sinControl.length === p.variantes.length;
+      p.stockTotal = p.variantes.reduce((s, v) => s + v.stock, 0);
+      resultado.push(p);
+    }
+    return resultado;
+  }
+
   // ── Carga principal ────────────────────────────────────────
 
   async function traerCSV(url) {
@@ -248,7 +297,14 @@ const Datos = (() => {
     return csvAObjetos(texto);
   }
 
-  async function cargar({ forzar = false } = {}) {
+  // La ficha y el stock en vivo se piden a la vez para no sumar esperas.
+  async function cargar(opciones = {}) {
+    const [ficha, enVivo] = await Promise.all([cargarFicha(opciones), traerEnVivo()]);
+    if (!enVivo || !ficha.productos.length) return { ...ficha, stockEnVivo: false };
+    return { ...ficha, productos: aplicarEnVivo(ficha.productos, enVivo), stockEnVivo: true };
+  }
+
+  async function cargarFicha({ forzar = false } = {}) {
     if (!forzar) {
       const cacheados = leerCache();
       if (cacheados) return { productos: cacheados, origen: 'cache' };
@@ -290,7 +346,7 @@ const Datos = (() => {
     }
   }
 
-  return { cargar, limpiarCache, parsearCSV, csvAObjetos, aNumero, aBooleano,
+  return { cargar, aplicarEnVivo, limpiarCache, parsearCSV, csvAObjetos, aNumero, aBooleano,
            aTexto, urlsDeLaHoja, extraerId };
 })();
 
