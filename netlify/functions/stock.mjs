@@ -57,34 +57,35 @@ export function resumir(lista) {
   return productos;
 }
 
-// Cuando MergeOn rechaza la key, pregunta de qué negocio es: el error más
-// probable es haber pegado la key de otro negocio. Solo se devuelve el número.
-async function diagnosticarKey({ url, key, ecommerceId }, status) {
+// Qué dijo quien rechazó: la API de MergeOn responde JSON con "detail"; un
+// firewall delante (Cloudflare) responde HTML. Del detalle se tachan las keys.
+async function describirRechazo(res) {
+  const tipo = res.headers.get('content-type') || '';
+  const cuerpo = (await res.text()).slice(0, 400);
+  if (!tipo.includes('json')) {
+    return `bloqueado antes de llegar a la API: ${tipo.split(';')[0] || 'sin tipo'}, server ${res.headers.get('server') || '?'}`;
+  }
+  let detalle = '';
+  try { const d = JSON.parse(cuerpo).detail; detalle = typeof d === 'string' ? d : JSON.stringify(d); } catch { /* sin detalle */ }
+  return (detalle || 'sin detalle').replace(/mk_[A-Za-z0-9]+/g, 'mk_***').slice(0, 160);
+}
+
+// Cuando MergeOn rechaza la lectura, junta el motivo que dio y de qué negocio
+// es la key (el error más probable es pegar la de otro negocio).
+async function diagnosticarKey({ url, key, ecommerceId }, rechazo) {
+  const base = `MergeOn respondió HTTP ${rechazo.status} (${await describirRechazo(rechazo)})`;
   try {
     const res = await fetch(`${url}/api-keys/me`, {
       headers: { ...IDENTIDAD, Authorization: `Bearer ${key}` },
       signal: AbortSignal.timeout(5000),
     });
-    if (!res.ok) {
-      // ¿Respondió la API de MergeOn o un firewall delante de ella? Un firewall
-      // devuelve HTML; la API, JSON con "detail". Del detalle se tachan las keys.
-      const tipo = res.headers.get('content-type') || '';
-      const cuerpo = (await res.text()).slice(0, 400);
-      if (!tipo.includes('json')) {
-        return `MergeOn respondió HTTP ${status}: bloqueado antes de llegar a la API (respuesta ${tipo.split(';')[0] || 'sin tipo'}, server ${res.headers.get('server') || '?'})`;
-      }
-      let detalle = '';
-      try { const d = JSON.parse(cuerpo).detail; detalle = typeof d === 'string' ? d : JSON.stringify(d); } catch { /* sin detalle */ }
-      detalle = detalle.replace(/mk_[A-Za-z0-9]+/g, 'mk_***').slice(0, 120);
-      return `MergeOn respondió HTTP ${status}: rechazó la key (HTTP ${res.status} al validarla${detalle ? `: ${detalle}` : ''})`;
-    }
-    const yo = await res.json();
-    const suyo = String(yo?.ecommerce_id ?? '?');
+    if (!res.ok) return `${base}; al validar la key: HTTP ${res.status} (${await describirRechazo(res)})`;
+    const suyo = String((await res.json())?.ecommerce_id ?? '?');
     return suyo === String(ecommerceId)
-      ? `MergeOn respondió HTTP ${status}: la key es del negocio ${suyo} pero no tiene permiso para leer productos`
-      : `MergeOn respondió HTTP ${status}: la key es del negocio ${suyo}, no del ${ecommerceId}`;
+      ? `${base}; la key sí es del negocio ${suyo}`
+      : `${base}; la key es del negocio ${suyo}, no del ${ecommerceId}`;
   } catch {
-    return `MergeOn respondió HTTP ${status}`;
+    return base;
   }
 }
 
@@ -95,7 +96,7 @@ async function traerProductos({ url, key, ecommerceId }) {
       headers: { ...IDENTIDAD, Authorization: `Bearer ${key}`, ecommerce_id: ecommerceId },
       signal: AbortSignal.timeout(8000),
     });
-    if (res.status === 401 || res.status === 403) throw new Error(await diagnosticarKey({ url, key, ecommerceId }, res.status));
+    if (res.status === 401 || res.status === 403) throw new Error(await diagnosticarKey({ url, key, ecommerceId }, res));
     if (!res.ok) throw new Error(`MergeOn respondió HTTP ${res.status}`);
     const lote = await res.json();
     if (!Array.isArray(lote)) {
