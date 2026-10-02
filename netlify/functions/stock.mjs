@@ -64,7 +64,11 @@ async function traerProductos({ url, key, ecommerceId }) {
     });
     if (!res.ok) throw new Error(`MergeOn respondió HTTP ${res.status}`);
     const lote = await res.json();
-    if (!Array.isArray(lote)) throw new Error('Respuesta inesperada de MergeOn');
+    if (!Array.isArray(lote)) {
+      // Solo los nombres de los campos, nunca sus valores
+      const forma = lote && typeof lote === 'object' ? Object.keys(lote).slice(0, 5).join(',') : typeof lote;
+      throw new Error(`Respuesta inesperada de MergeOn (${forma})`);
+    }
     todos.push(...lote);
     if (lote.length < POR_PAGINA) return { lista: todos, completo: true };
   }
@@ -85,7 +89,8 @@ const json = (cuerpo, status, cache) => new Response(JSON.stringify(cuerpo), {
 export default async (req) => {
   if (req.method !== 'GET') return json({ error: 'Método no permitido' }, 405, false);
 
-  const key = process.env.MERGEON_API_KEY;
+  // trim: al pegar la key en Netlify es fácil que se cuele un espacio o un salto de línea
+  const key = (process.env.MERGEON_API_KEY || '').trim();
   if (!key) return json({ error: 'Falta configurar MERGEON_API_KEY en Netlify' }, 503, false);
 
   try {
@@ -96,9 +101,15 @@ export default async (req) => {
     });
     return json({ completo, actualizado: new Date().toISOString(), productos: resumir(lista) }, 200, true);
   } catch (err) {
-    // El detalle va al log de Netlify; al navegador solo un aviso genérico.
-    console.error('[stock] No se pudo leer MergeOn:', err.message);
-    return json({ error: 'No se pudo leer el stock' }, 502, false);
+    // El motivo es siempre uno de los mensajes armados aquí (código HTTP,
+    // tiempo agotado, sin conexión): nunca lleva la key ni datos de MergeOn.
+    const motivo = err.name === 'TimeoutError' ? 'MergeOn tardó más de 8 s'
+      : err.message.startsWith('MergeOn') || err.message.startsWith('Respuesta') ? err.message
+      : 'No se pudo conectar con MergeOn';
+    // Tampoco al log va err.message suelto: un error de cabecera inválida lo
+    // repetiría con la key adentro.
+    console.error('[stock] No se pudo leer MergeOn:', err.name, motivo);
+    return json({ error: 'No se pudo leer el stock', motivo }, 502, false);
   }
 };
 
